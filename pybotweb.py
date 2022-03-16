@@ -1,9 +1,12 @@
-from bottle import route, run, template # 関数をインポート
-from datetime import datetime # datetimeをインポート
+from bottle import route, run, template, request # 関数をインポート
 
 @route('/hello')
 def hello():
-    now = datetime.now() # 現在時刻を取得
-    return template('Hello World! {{now}}', now=now) # template関数の利用
+    return template('pybot_template', text='') # template関数の利用
+
+@route('/hello', method='POST')
+def do_hello():
+    input_text = request.forms.input_text
+    return template('pybot_template', text=input_text)
 
 run(host='localhost', port=8080, debug=True)
